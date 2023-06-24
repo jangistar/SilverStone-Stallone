@@ -3,6 +3,7 @@ import re
 from typing import Optional, List
 from sys import argv
 
+from pyrogram import idle, Client
 from telegram import Bot, Update, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import (
     Unauthorized,
@@ -29,6 +30,7 @@ from tg_bot import (
     LOGGER,
     ALLOW_EXCL,
     telethn,
+    kp,
 )
 
 # needed to dynamically load modules
@@ -38,7 +40,7 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Hi {}, my name is {}! 
+Hi {}, my name is {}!
 I am Funny group management bot with some extras 🤪
 You can find the list of available commands with /help.
 """
@@ -62,7 +64,7 @@ And the following:
 )
 
 
-KAALI_IMG = "https://telegra.ph/file/e86b3fd52442503974b9c.jpg"
+KAALI_IMG = "https://telegra.ph/file/f59edcdd5b8f0a6fa0a28.jpg"
 
 DONATE_STRING = """Kaali is Free for everyone, Still if you want to Donate click [here](paypal.me/abhinav6497) """
 
@@ -156,10 +158,12 @@ else:
                 KAALI_IMG,
                 PM_START_TEXT.format(
                     escape_markdown(first_name),
-                    escape_markdown(bot.first_name)),
+                    escape_markdown(bot.first_name),
+                    OWNER_ID,
+                ),
                 parse_mode=ParseMode.MARKDOWN,
-                disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup(
+ Test
                     [[
                         InlineKeyboardButton(
                              text="🚑 Support Group",
@@ -174,10 +178,38 @@ else:
                             url="t.me/{}?startgroup=true".format(
                                 bot.username))
                      ]]))
+=======
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text="Add Kaali to your group",
+                                url="t.me/{}?startgroup=true".format(
+                                    bot.username
+                                ),
+                            )
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="Support Chat",
+                                url=f"https://t.me/KaaliSupport",
+                            ),
+                            InlineKeyboardButton(
+                                text="Kaali Updates Channel",
+                                url="https://t.me/KaaliUpdates",
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="Source code",
+                                url="https://github.com/abhinav6497/kaali",
+                            )
+                        ],
+                    ]
+                ),
+            )
+ master
     else:
-        update.effective_message.reply_text(
-            "I'm online!\n<b>Up since:</b> <code>{}</code>".format(uptime),
-            parse_mode=ParseMode.HTML)
+        update.effective_message.reply_text("Hi, I'm Kaali.")
 
 
 # for test purposes
@@ -560,9 +592,12 @@ def main():
     else:
         telethn.run_until_disconnected()
     updater.idle()
-
+    
+    
 
 if __name__ == "__main__":
+    kp.start()
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     telethn.start(bot_token=TOKEN)
     main()
+    idle() 
